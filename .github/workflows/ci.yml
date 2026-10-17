@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  server:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Step 1 - Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Step 2 - Set up Rust
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Step 3 - Check server
+      run: cargo check --manifest-path liyo-server/Cargo.toml --locked
+
+    - name: Step 4 - Run server tests
+      run: cargo test --manifest-path liyo-server/Cargo.toml --locked
